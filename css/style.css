@@ -1,0 +1,432 @@
+/**
+ * Clean & Simple Academic Styling
+ * CSET302: Automata Theory and Computability - Bennett University
+ */
+
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --purple: #7c3aed;
+    --purple-hover: #6d28d9;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #cbd5e1;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --font: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font);
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+/* Header */
+.app-header {
+    background: linear-gradient(135deg, #1e3a8a, #4338ca);
+    color: #ffffff;
+    padding: 1.25rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.app-header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.app-header .subtitle {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+}
+
+
+
+/* Tab Navigation */
+.tabs-nav {
+    max-width: 1300px;
+    margin: 1rem auto 0;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.tab-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: #e2e8f0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+    background: #cbd5e1;
+    color: var(--text);
+}
+
+.tab-btn.active {
+    background: #ffffff;
+    color: var(--primary);
+    border-top: 3px solid var(--primary);
+}
+
+/* Main Container */
+.main-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Cards */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.card-head h2,
+.card-head h3,
+.card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem;
+    color: var(--text-muted);
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Grids */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+@media (max-width: 900px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Form inputs */
+.inputs-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+    min-width: 130px;
+}
+
+.input-field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.input-field input,
+.sample-box select,
+.sim-row input,
+.inline-select select {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+}
+
+.input-field input:focus,
+.sim-row input:focus {
+    border-color: var(--primary);
+}
+
+.btn-field {
+    flex: 0 0 auto;
+}
+
+.sample-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.status-msg {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    display: none;
+}
+
+.status-msg.valid {
+    display: block;
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.status-msg.invalid {
+    display: block;
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* Buttons */
+.btn {
+    font-family: var(--font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: var(--text);
+}
+
+.btn-secondary:hover {
+    background: #cbd5e1;
+}
+
+.btn-convert {
+    background: #16a34a;
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    border-radius: 8px;
+}
+
+.btn-convert:hover {
+    background: #15803d;
+}
+
+/* Tables */
+.table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.mini-scroll {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.simple-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    text-align: center;
+}
+
+.simple-table th {
+    background: #f1f5f9;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    font-weight: 600;
+}
+
+.simple-table td {
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--border);
+}
+
+.simple-table select {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+}
+
+/* Diagram Canvas */
+.diagram-canvas {
+    height: 380px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Simulation Controls */
+.sim-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.sim-row input {
+    flex: 1;
+    min-width: 180px;
+}
+
+.output-box {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.output-box strong {
+    color: var(--primary);
+    font-family: var(--font-mono);
+}
+
+/* Convert Action Banner */
+.convert-action-card {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.convert-action-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.convert-action-card p {
+    font-size: 0.9rem;
+    color: #dbeafe;
+}
+
+.convert-action-btns {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.inline-select {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.75rem;
+}
+
+.inline-select select {
+    background: #ffffff;
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* Explanations & Comparisons */
+.explanation-box {
+    background: #f8fafc;
+    border-left: 4px solid var(--primary);
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.explanation-box ul {
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.comparison-box {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+}
+
+.comparison-box .match {
+    color: var(--success);
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}

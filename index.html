@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mealy–Moore Machine Simulator | Bennett University</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Simple Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <div>
+                <h1>Mealy–Moore Machine Conversion Simulator</h1>
+                <p class="subtitle">CSET302: Automata Theory and Computability • Bennett University</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2 Simple Tabs -->
+    <nav class="tabs-nav">
+        <button class="tab-btn active" data-tab="mealy-mode">Mealy → Moore Conversion</button>
+        <button class="tab-btn" data-tab="moore-mode">Moore → Mealy Conversion</button>
+    </nav>
+
+    <main class="main-container">
+
+        <!-- ==================== TAB 1: MEALY TO MOORE ==================== -->
+        <section id="tab-mealy-mode" class="tab-content active">
+            
+            <!-- Step 1: Define Machine -->
+            <div class="card">
+                <div class="card-head">
+                    <h2>1. Define Mealy Machine</h2>
+                    <div class="sample-box">
+                        <span>Preset / Mode:</span>
+                        <select id="mealy-sample-select"></select>
+                    </div>
+                </div>
+
+                <div class="inputs-row">
+                    <div class="input-field">
+                        <label>States (Q):</label>
+                        <input type="text" id="mealy-states" value="q0, q1, q2">
+                    </div>
+                    <div class="input-field">
+                        <label>Input Alphabet (Σ):</label>
+                        <input type="text" id="mealy-alphabet" value="0, 1">
+                    </div>
+                    <div class="input-field">
+                        <label>Output Alphabet (Δ):</label>
+                        <input type="text" id="mealy-out-alphabet" value="0, 1">
+                    </div>
+                    <div class="input-field">
+                        <label>Start State (q0):</label>
+                        <input type="text" id="mealy-start" value="q0">
+                    </div>
+                    <div class="input-field btn-field">
+                        <button class="btn btn-secondary" id="mealy-update-btn">Update Table</button>
+                    </div>
+                </div>
+
+                <div id="mealy-status" class="status-msg"></div>
+
+                <h3 class="section-title">Transition Table (Next State / Output)</h3>
+                <div class="table-wrap" id="mealy-table-wrap"></div>
+            </div>
+
+            <!-- Step 2: Diagram & Simulation -->
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-head">
+                        <h3>State Diagram</h3>
+                        <span class="hint">Drag circles to move</span>
+                    </div>
+                    <div class="diagram-canvas" id="mealy-diagram-wrap"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-head">
+                        <h3>Simulate Input String</h3>
+                    </div>
+                    <div class="sim-row">
+                        <input type="text" id="mealy-sim-input" placeholder="Type any string (e.g. 10101)">
+                        <button class="btn btn-primary" id="mealy-sim-run-btn">Simulate</button>
+                        <button class="btn btn-secondary" id="mealy-sim-step-btn">Step</button>
+                        <button class="btn btn-secondary" id="mealy-sim-reset-btn">Reset</button>
+                    </div>
+                    <div class="output-box">
+                        Output: <strong id="mealy-sim-output">—</strong>
+                    </div>
+                    <div class="table-wrap mini-scroll">
+                        <table class="simple-table" id="mealy-trace-table">
+                            <thead>
+                                <tr><th>Step</th><th>State</th><th>Read</th><th>Next</th><th>Out</th><th>Total Out</th></tr>
+                            </thead>
+                            <tbody><tr><td colspan="6" class="text-muted">Enter string and click Simulate</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Convert Button -->
+            <div class="convert-action-card">
+                <div>
+                    <h3>Ready to Convert to Moore Machine?</h3>
+                    <p>Calculates state splits for states receiving different outputs and creates the Moore machine.</p>
+                </div>
+                <div class="convert-action-btns">
+                    <button class="btn btn-convert" id="convert-to-moore-btn">Convert to Moore Machine →</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Converted Results (Shown after clicking convert) -->
+            <div id="moore-result-area" class="result-area" style="display: none;">
+                <!-- Explanation -->
+                <div class="card">
+                    <h3>Conversion Steps & State Splitting</h3>
+                    <div id="mealy-to-moore-explanation" class="explanation-box"></div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Converted Moore Transition Table</h3>
+                        <div class="table-wrap" id="converted-moore-table-wrap"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Converted Moore Diagram</h3>
+                        <div class="diagram-canvas" id="converted-moore-diagram-wrap"></div>
+                    </div>
+                </div>
+
+                <!-- Simulation comparison -->
+                <div class="card">
+                    <h3>Verify with Input String</h3>
+                    <div class="sim-row">
+                        <input type="text" id="m2m-test-input" placeholder="Type any string to test both machines" value="10101">
+                        <button class="btn btn-primary" id="m2m-test-btn">Run Comparison</button>
+                    </div>
+                    <div id="m2m-comparison-result" class="comparison-box"></div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ==================== TAB 2: MOORE TO MEALY ==================== -->
+        <section id="tab-moore-mode" class="tab-content">
+            
+            <!-- Step 1: Define Machine -->
+            <div class="card">
+                <div class="card-head">
+                    <h2>1. Define Moore Machine</h2>
+                    <div class="sample-box">
+                        <span>Preset / Mode:</span>
+                        <select id="moore-sample-select"></select>
+                    </div>
+                </div>
+
+                <div class="inputs-row">
+                    <div class="input-field">
+                        <label>States (Q):</label>
+                        <input type="text" id="moore-states" value="q0, q1, q2">
+                    </div>
+                    <div class="input-field">
+                        <label>Input Alphabet (Σ):</label>
+                        <input type="text" id="moore-alphabet" value="0, 1">
+                    </div>
+                    <div class="input-field">
+                        <label>Output Alphabet (Δ):</label>
+                        <input type="text" id="moore-out-alphabet" value="0, 1">
+                    </div>
+                    <div class="input-field">
+                        <label>Start State (q0):</label>
+                        <input type="text" id="moore-start" value="q0">
+                    </div>
+                    <div class="input-field btn-field">
+                        <button class="btn btn-secondary" id="moore-update-btn">Update Table</button>
+                    </div>
+                </div>
+
+                <div id="moore-status" class="status-msg"></div>
+
+                <h3 class="section-title">Transition Table (State Output & Next State)</h3>
+                <div class="table-wrap" id="moore-table-wrap"></div>
+            </div>
+
+            <!-- Step 2: Diagram & Simulation -->
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-head">
+                        <h3>Moore State Diagram</h3>
+                        <span class="hint">Divided circle: State (top) / Output (bottom)</span>
+                    </div>
+                    <div class="diagram-canvas" id="moore-diagram-wrap"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-head">
+                        <h3>Simulate Input String</h3>
+                    </div>
+                    <div class="sim-row">
+                        <input type="text" id="moore-sim-input" placeholder="Type any string (e.g. 0101)">
+                        <button class="btn btn-primary" id="moore-sim-run-btn">Simulate</button>
+                        <button class="btn btn-secondary" id="moore-sim-step-btn">Step</button>
+                        <button class="btn btn-secondary" id="moore-sim-reset-btn">Reset</button>
+                    </div>
+                    <div class="output-box">
+                        Output: <strong id="moore-sim-output">—</strong>
+                    </div>
+                    <div class="table-wrap mini-scroll">
+                        <table class="simple-table" id="moore-trace-table">
+                            <thead>
+                                <tr><th>Step</th><th>State</th><th>Read</th><th>Next</th><th>Out</th><th>Total Out</th></tr>
+                            </thead>
+                            <tbody><tr><td colspan="6" class="text-muted">Enter string and click Simulate</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Convert Button -->
+            <div class="convert-action-card">
+                <div>
+                    <h3>Ready to Convert to Mealy Machine?</h3>
+                    <p>Assigns target state outputs to transitions: <code>λ_Mealy(q, a) = λ_Moore(δ(q, a))</code>.</p>
+                </div>
+                <div class="convert-action-btns">
+                    <button class="btn btn-convert" id="convert-to-mealy-btn">Convert to Mealy Machine →</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Converted Results -->
+            <div id="mealy-result-area" class="result-area" style="display: none;">
+                <!-- Explanation -->
+                <div class="card">
+                    <h3>Conversion Steps</h3>
+                    <div id="moore-to-mealy-explanation" class="explanation-box"></div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Converted Mealy Transition Table</h3>
+                        <div class="table-wrap" id="converted-mealy-table-wrap"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Converted Mealy Diagram</h3>
+                        <div class="diagram-canvas" id="converted-mealy-diagram-wrap"></div>
+                    </div>
+                </div>
+
+                <!-- Simulation comparison -->
+                <div class="card">
+                    <h3>Verify with Input String</h3>
+                    <div class="sim-row">
+                        <input type="text" id="m2mealy-test-input" placeholder="Type any string to test both machines" value="0101">
+                        <button class="btn btn-primary" id="m2mealy-test-btn">Run Comparison</button>
+                    </div>
+                    <div id="m2mealy-comparison-result" class="comparison-box"></div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/automata-core.js"></script>
+    <script src="js/conversion.js"></script>
+    <script src="js/samples.js"></script>
+    <script src="js/diagram.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
